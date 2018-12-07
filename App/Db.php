@@ -20,7 +20,14 @@ class Db
      */
   }
 
-
+  /**
+   * Выполняет запрос к БД
+   * 
+   * @param $sql
+   * @param array $data
+   * @param string $class
+   * @return array|bool|string - возвращает объект или массив объектов нужного класса
+   */
   public function query($sql, $data = [], $class = '')
   {
 
@@ -30,7 +37,7 @@ class Db
     // Проверка на корректность запроса
     if (false === $sth) {
       echo '<p class="warning"> Error occurred:' . implode(":", self::$dbh->errorInfo()) . '<p>';
-      return $sth;
+      return false;
     }
 
     $sth->execute($data); // запуск подготовленного запроса
@@ -42,16 +49,18 @@ class Db
   }
 
   /**
+   * Выполняет запрос к БД
+   *
    * @param $query
    * @param array $params
-   * @return bool
+   * @return bool - true - успех, false - ошибка
    */
   public function execute($query, $params = [])
   {
     $sth = self::$dbh->prepare($query);
     $sth->execute($params); // запуск подготовленного запроса
     if (assert(self::$dbh->errorCode() === '00000')) {
-      return true; // Завершилось без ошибок, классу пустой. Вернем успех.
+      return true;
     }
     return false;
   }

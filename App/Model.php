@@ -23,6 +23,12 @@ abstract class Model
     // Static - имя класса, где вызывается во время выполнения
   }
 
+  /**
+   * Поиск по ID
+   *
+   * @param int $id
+   * @return bool
+   */
   public static function findById(int $id)
   {
     $db = new Db;
