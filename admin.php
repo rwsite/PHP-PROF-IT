@@ -20,4 +20,4 @@ $articles = array_reverse($articles);
 var_dump($articles);
 echo '</pre>';*/
 
-require_once __DIR__ . '/App/View/admin.php';
+require_once __DIR__ . '/App/Templates/admin.php';
