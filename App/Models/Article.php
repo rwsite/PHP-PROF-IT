@@ -11,8 +11,8 @@ class Article extends Model
   protected static $table = 'articles';
 
   //public $id; - уже объявлено в модели
-  public $title;
   public $content;
+  public $title;
   public $thumbnail;
 
   /**

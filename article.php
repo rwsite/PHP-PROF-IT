@@ -16,4 +16,4 @@ if (!$article) {
   return;
 }
 
-require_once __DIR__ . '/App/Templates/article.php';
+require_once __DIR__ . '/App/View/article.php';
