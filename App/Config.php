@@ -6,15 +6,19 @@ namespace App;
 use App\Models\HasRead;
 use App\Models\HasSave;
 
-class Config implements HasRead, HasSave
-{
+/**
+ * Class Config
+ * @package App
+ */
+class Config {
   private static $_instance = null;
 
-  private static $db = 'sdf';
-  private static $host = 'sdf';
-  private static $user = 'sdf';
-  private static $password = 'sdf';
-  private static $data;
+  private static $db;
+  private static $host;
+  private static $user;
+  private static $password;
+
+  public $data;
 
   private function __construct()
   {
@@ -41,8 +45,15 @@ class Config implements HasRead, HasSave
 
   public function get_data()
   {
-    self::$data = [self::$db, self::$host, self::$user, self::$password];
-    return self::$data;
+
+    $this->data = [
+      self::$db,
+      self::$host,
+      self::$user,
+      self::$password
+    ];
+
+    return $this->data;
   }
 
 }

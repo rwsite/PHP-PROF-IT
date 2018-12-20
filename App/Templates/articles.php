@@ -3,13 +3,8 @@
  * Шаблон вывода всех записей
  */
 
-use App\Models\Article;
-
-$articles = Article::FindAll();
-$articles = array_reverse($articles);
 $title = 'Блог программиста';
 $subtitle = '...';
-
 ?>
 
 <!doctype html>
@@ -18,13 +13,10 @@ $subtitle = '...';
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-
   <title><?= $title ?></title>
 </head>
 <body>
@@ -37,16 +29,17 @@ $subtitle = '...';
     <small><?php echo $subtitle ?></small>
   </h1>
 
-  <?php foreach ($articles as $article) {
-    ?>
-    <!-- Project One -->
+  <?php foreach ($articles as $article) :    ?>
+
     <article>
       <div class="row">
         <div class="col-md-7">
           <a href="/article.php?id=<?= $article->id ?>">
+            <?php if(!empty($article->thumbnail)) : ?>
             <img class="img-fluid rounded mb-3 mb-md-0" src="<?= $article->thumbnail ?>" alt="700x300">
+            <?php endif; ?>
           </a>
-        </div>
+      </div>
         <div class="col-md-5">
           <h3><?= $article->title ?></h3>
           <p><?= $article->content ?></p>
@@ -56,35 +49,7 @@ $subtitle = '...';
       <!-- /.row -->
     </article>
     <hr>
-    <?php
-  }
-  ?>
-
-  <!-- Pagination -->
-  <ul class="pagination justify-content-center">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-        <span class="sr-only">Previous</span>
-      </a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">1</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">2</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">3</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Next</span>
-      </a>
-    </li>
-  </ul>
-
+  <?php  endforeach;  ?>
 </div>
 <!-- /.container -->
 

@@ -2,10 +2,15 @@
 
 namespace App;
 
+/**
+ * Class Db
+ * @package App
+ */
 class Db
 {
 
-  protected static $dbh;
+  /** @var \PDO  */
+  protected $dbh;
 
   public function __construct()
   {
@@ -13,38 +18,32 @@ class Db
     $user = 'mysql';
     $password = 'mysql';
 
-    self::$dbh = new \PDO ($dsn, $user, $password); // Новое подключение к mysql
+    $this->dbh = new \PDO ($dsn, $user, $password); // Новое подключение к mysql
     /**
-     * Вывод ошибок везде делают через try catch.. при создании подключения?
-     * https://habr.com/post/137664/
+     *  https://habr.com/post/137664/
      */
   }
 
   /**
    * Выполняет запрос к БД
-   * 
-   * @param $sql
-   * @param array $data
-   * @param string $class
-   * @return array|bool|string - возвращает объект или массив объектов нужного класса
+   *
+   * @param string $sql - запрос sql
+   * @param \stdClass $class - имя класса, для класса котороый нужно вернуть
+   * @param array $params - массив данных для подстановки
+   * @return array|bool|string - возвращает объект или массив объектов нужного класса, если ошибка false
    */
-  public function query($sql, $data = [], $class = '')
+  public function query( string $sql, $class = null, $params = [] )
   {
 
-    self::$dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-    $sth = self::$dbh->prepare($sql); // подготовка запроса
+    $this->dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+    $sth = $this->dbh->prepare($sql); // подготовка запроса
 
-    // Проверка на корректность запроса
-    if (false === $sth) {
-      echo '<p class="warning"> Error occurred:' . implode(":", self::$dbh->errorInfo()) . '<p>';
-      return false;
-    }
-
-    $sth->execute($data); // запуск подготовленного запроса
+    $sth->execute($params); // запуск подготовленного запроса
     $class = $sth->fetchAll(\PDO::FETCH_CLASS); // возвращает результат
     // Если нет результата
     if(empty($class))
       return false;
+
     return $class;
   }
 
@@ -55,11 +54,11 @@ class Db
    * @param array $params
    * @return bool - true - успех, false - ошибка
    */
-  public function execute($query, $params = [])
+  public function execute( string $query, $params = [])
   {
-    $sth = self::$dbh->prepare($query);
+    $sth = $this->dbh->prepare($query);
     $sth->execute($params); // запуск подготовленного запроса
-    if (assert(self::$dbh->errorCode() === '00000')) {
+    if (assert($this->dbh->errorCode() === '00000')) {
       return true;
     }
     return false;

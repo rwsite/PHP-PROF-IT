@@ -4,25 +4,39 @@ namespace App\Models;
 
 use App\Model;
 
+/**
+ * Class Product
+ * @package App\Models
+ */
 class Product extends Model implements HasPriceInterface
 {
-
+  /**
+   * @var string - Table name
+   */
   protected static $table = 'products';
 
-  use HasPriceTrait; // price
+  use HasPriceTrait; // price + price func
 
   public $name;
   public $weight;
   public $description;
   public $thumbnail;
 
-  public function __construct($name = null, $price = null, $weight = null, $description = null, $thumbnail = null)
+  /**
+   * Product constructor.
+   * @param string $name
+   * @param float $price
+   * @param float $weight
+   * @param string $description
+   * @param string $thumbnail
+   */
+  public function __construct( string $name, float $price, float $weight, string $description, string $thumbnail)
   {
-    $this->name = $name ?? $this->name;
-    $this->price = $price ?? $this->price;
-    $this->weight = $weight ?? $this->weight;
-    $this->description = $description ?? $this->description;
-    $this->thumbnail = $thumbnail ?? $this->thumbnail;
+    $this->name = $name;
+    $this->price = $price;
+    $this->weight = $weight;
+    $this->description = $description;
+    $this->thumbnail = $thumbnail;
   }
 
 }

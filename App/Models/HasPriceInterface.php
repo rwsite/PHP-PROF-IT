@@ -5,7 +5,10 @@
 
 namespace App\Models;
 
-
+/**
+ * Interface HasPriceInterface
+ * @package App\Models
+ */
 interface HasPriceInterface
 {
   public function getPrice();
