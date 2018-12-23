@@ -13,7 +13,9 @@ abstract class Model
    */
   protected static $table = '';//защищенное статическое свойсво, можно заменить на константу
 
-
+  /**
+   * @var - каждый объект должен именть id, для работы с базой
+   */
   public $id;
 
   /**
@@ -82,9 +84,7 @@ abstract class Model
    */
   public function insert()
   {
-
     $fields = get_object_vars($this);// Получим свойства объекта в виде полей
-    var_dump($fields);
     $data = $table = [];
     foreach ($fields as $key => $val) {
       if ($key === 'id') {
@@ -99,7 +99,6 @@ abstract class Model
       ' ( ' . implode(', ', $table) . ' ) ' .
       ' VALUES ( ' . implode(', ', array_keys($data)) . ' )';
     $db = new Db;
-    var_dump($data);
     $result = $db->execute($sql, $data);
     return $result;
     /*

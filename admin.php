@@ -20,6 +20,7 @@ if ($_GET['action'] === 'edit' and !empty($_GET['id'])) {
   if (false === $article) {
     return;
   }
+  $result = $article->delete();
   $articles = Article::FindAll();
   include('App/Templates/admin.php');
 } elseif ($_GET['action'] === 'save' and !empty($_GET['id'])) {
@@ -36,11 +37,12 @@ if ($_GET['action'] === 'edit' and !empty($_GET['id'])) {
   include('App/Templates/admin.php');
 } elseif ($_GET['action'] === 'add' and !empty($_POST)) {
   $article = new Article;
+  // Хотел сделать конструктор, но тогда нужно переписать методы класса DB и модели..
   $article->title = $_POST['title'];
   $article->content = $_POST['content'];
   $article->thumbnail = $_POST['thumbnail'];
   $article->author_id = filter_var($_POST['author_id'], FILTER_VALIDATE_INT);
-  $result = $article->save();
+  $result = $article->insert();
   $articles = \App\Models\Article::FindAll();
   include('App/Templates/admin.php');
 } else {

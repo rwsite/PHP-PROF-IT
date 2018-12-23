@@ -2,7 +2,7 @@
 /**
  * Шаблон Админ панели
  */
-$title = 'Редактирование статьи';
+$title = 'Редактирование статьи - ' . $article->title;
 $subtitle = '...';
 ?>
 
@@ -19,16 +19,11 @@ $subtitle = '...';
 </head>
 <body>
 
-
 <!-- Page Content -->
 <div class="container text-center">
   <h1>Панель Администратора</h1>
   <p><?= $subtitle ?></p>
   <div class="row">
-    <div class="col-md-12">
-
-    </div>
-
     <div class="col-md-12">
       <h3><?= $title ?></h3>
       <form method="post" action="admin.php?action=save&id=<?= $article->id ?>">
