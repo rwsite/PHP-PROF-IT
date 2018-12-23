@@ -5,9 +5,10 @@
 
 require __DIR__ . '/autoload.php';
 
-$authors = \App\Models\Authors::FindAll();
 
 use App\Models\Article;
+
+$authors = \App\Models\Author::FindAll();
 
 if ($_GET['action'] === 'edit' and !empty($_GET['id'])) {
   $article = Article::findById($_GET['id']);
@@ -37,7 +38,7 @@ if ($_GET['action'] === 'edit' and !empty($_GET['id'])) {
   include('App/Templates/admin.php');
 } elseif ($_GET['action'] === 'add' and !empty($_POST)) {
   $article = new Article;
-  // Хотел сделать конструктор, но тогда нужно переписать методы класса DB и модели..
+  // Хотел сделать конструктор, но тогда нужно перепиывать методы модели и Db..
   $article->title = $_POST['title'];
   $article->content = $_POST['content'];
   $article->thumbnail = $_POST['thumbnail'];

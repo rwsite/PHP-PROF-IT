@@ -23,14 +23,16 @@ $subtitle = '...';
 
 <!-- Page Content -->
 <div class="container">
-
   <!-- Page Heading -->
   <h1 class="my-4"><?= $title ?>
     <small><?php echo $subtitle ?></small>
   </h1>
-
-  <?php foreach ($articles as $article) :    ?>
-
+  <?php
+  /** Автора не может не быть, ограничение находится в Бд.
+   * Нельзя создать Запись без автора. https://vgy.me/W1aWbm.jpg
+   * Даже если убрать ограничение not null, фатальной ошибки не будет..
+   */
+  foreach ($articles as $article) : ?>
     <article>
       <div class="row">
         <div class="col-md-7">
@@ -41,31 +43,18 @@ $subtitle = '...';
           </a>
       </div>
         <div class="col-md-5">
-          <h3><?= $article->title ?></h3>
+          <div class="post-meta bg-light text-dark">
+            Автор: <?php echo $article->author->FirstName . ' ' . $article->author->LastName ?></div>
+          <a href="/article.php?id=<?= $article->id ?>"><h3><?= $article->title ?></h3></a>
           <p><?= $article->content ?></p>
-          <a class="btn btn-primary" href="/article.php?id=<?= $article->id ?>">Continue reading</a>
         </div>
       </div>
       <!-- /.row -->
     </article>
     <hr>
   <?php  endforeach;  ?>
+
 </div>
 <!-- /.container -->
-
-
-
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
 </body>
 </html>

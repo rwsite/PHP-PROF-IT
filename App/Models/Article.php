@@ -6,7 +6,8 @@ namespace App\Models;
 use App\Model;
 
 /**
- * Class Article
+ * Class Article - Статьи на сайте
+ *
  * @package App\Models
  */
 class Article extends Model
@@ -56,4 +57,17 @@ class Article extends Model
   {
     return $this->content;
   }
+
+  /**
+   * @param $name
+   * @return bool
+   */
+  public function __get($name)
+  {
+    if ($name === 'author') {
+      if (!empty($this->author_id))
+        return Author::findById($this->author_id);
+    }
+  }
+
 }

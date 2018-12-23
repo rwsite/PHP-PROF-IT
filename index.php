@@ -6,7 +6,6 @@
 require __DIR__ . '/autoload.php';
 
 
-use App\Models\Article;
-$articles = Article::FindAll();
-
-include __DIR__ . '/App/Templates/articles.php';
+$view = new \App\Views\View();
+$view->articles = \App\Models\Article::FindAll();
+$view->display(__DIR__ . '/App/Templates/articles.php');
