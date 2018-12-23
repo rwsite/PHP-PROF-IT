@@ -27,14 +27,15 @@ class Article extends Model
    * @param string $content - Текст записи
    * @param string $thumbnail - url изображения записи
    * @param int $author_id - id автора записи
+   * public function __construct( string $title , string $content, string $thumbnail , int $author_id )
+   * {
+   * $this->title = $title ?? $this->title;
+   * $this->content = $content ?? $this->content;
+   * $this->thumbnail = $thumbnail ?? $this->thumbnail;
+   * $this->author_id = $author_id ?? $this->author_id;
+   * }
    */
-  public function __construct( string $title, string $content, string $thumbnail, int $author_id )
-  {
-    $this->title = $title;
-    $this->content = $content;
-    $this->thumbnail = $thumbnail;
-    $this->author_id = $author_id;
-  }
+
 
   /**
    * Получаем Название записи блога

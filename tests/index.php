@@ -14,16 +14,20 @@ echo '<h1>Тестовая страница</h1>';
  * Создадим объект
  * Запишем его в БД
  */
-$data = new Article('Заголовок записи', 'Это текст публикации', 'https://bugaga.ru/uploads/posts/2014-06/1402471536_prikoly-6.jpg', 1 );
-$result = $data->insert();
+$data = new Article;
+#$result = $data->insert();
 
 echo '<pre>';
-var_dump($result);
+#var_dump($result);
 echo '</pre>';
 
 /**
  * Поулчим объект по ID
  */
+
+//$data = Article::findById('0'); // нет объекта с id 0
+
+//$data = Article::findById('52'); // есть объект
 
 $data = Article::findById('1');
 

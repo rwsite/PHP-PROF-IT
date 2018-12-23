@@ -26,8 +26,8 @@ abstract class Model
   public static function FindAll()
   {
     $db = new Db;
-    $sql = 'SELECT * FROM ' . static::$table ;
-    return $db->query($sql,  static::class, []);
+    $sql = 'SELECT * FROM ' . static::$table;
+    return $db->query($sql, static::class, []);
     // self - Имя текущего класа.
     // Static - имя класса, где вызывается во время выполнения
   }
@@ -42,10 +42,11 @@ abstract class Model
   {
     $db = new Db;
     $sql = 'SELECT * FROM ' . static::$table . ' WHERE id=:id';
-    $result = $db->query($sql,  static::class, [':id' => $id])[0];
-    if ($result == null)
-      $result = false;
-    return $result;
+    $result = $db->query($sql, static::class, [':id' => $id]);
+    if (!empty($result)) {
+      return $result[0];
+    }
+    return false;
   }
 
   /**

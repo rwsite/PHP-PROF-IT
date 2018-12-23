@@ -32,19 +32,18 @@ class Db
    * @param array $params - массив данных для подстановки
    * @return array|bool|string - возвращает объект или массив объектов нужного класса, если ошибка false
    */
-  public function query( string $sql, $class = null, $params = [] )
+  public function query(string $sql, $class = null, $params = [], $constructorArguments = [])
   {
-
     $this->dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
     $sth = $this->dbh->prepare($sql); // подготовка запроса
-
-    $sth->execute($params); // запуск подготовленного запроса
-    $class = $sth->fetchAll(\PDO::FETCH_CLASS); // возвращает результат
-    // Если нет результата
-    if(empty($class))
+    $res = $sth->execute($params); // запуск подготовленного запроса, true -если ок
+    $obj = $sth->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class, $constructorArguments); // Возвращает все объекты
+    //$obj = $sth->fetchObject( $class ); // возвращает 1 объект
+    if(empty($class)) {
       return false;
+    }
 
-    return $class;
+    return $obj;
   }
 
   /**
