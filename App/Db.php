@@ -30,21 +30,17 @@ class Db
    * @param string $sql - запрос sql
    * @param \stdClass $class - имя класса, для класса котороый нужно вернуть
    * @param array $params - массив данных для подстановки
+   *
    * @return array|bool|string - возвращает объект или массив объектов нужного класса, если ошибка false
    */
   public function query( string $sql, $class = null, $params = [] )
   {
-
-    $this->dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
     $sth = $this->dbh->prepare($sql); // подготовка запроса
-
-    $sth->execute($params); // запуск подготовленного запроса
-    $class = $sth->fetchAll(\PDO::FETCH_CLASS); // возвращает результат
-    // Если нет результата
-    if(empty($class))
-      return false;
-
-    return $class;
+    $sth->execute($params); // запуск подготовленного запроса, true -если ок
+    if ($class === null) {
+      return $sth->fetchAll();
+    }
+    return $sth->fetchAll(\PDO::FETCH_CLASS, $class); // Возвращает все объекты
   }
 
   /**
@@ -57,12 +53,7 @@ class Db
   public function execute( string $query, $params = [])
   {
     $sth = $this->dbh->prepare($query);
-    $sth->execute($params); // запуск подготовленного запроса
-    if (assert($this->dbh->errorCode() === '00000')) {
-      return true;
-    }
-    return false;
+    return $sth->execute($params); // запуск подготовленного запроса
   }
-
 
 }

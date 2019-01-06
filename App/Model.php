@@ -13,7 +13,7 @@ abstract class Model
    */
   protected static $table = '';//защищенное статическое свойсво, можно заменить на константу
 
-
+  /** @var id */
   public $id;
 
   /**
